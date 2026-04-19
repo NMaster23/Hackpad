@@ -13,22 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install ARM GCC toolchain
+      - name: Build firmware using QMK Docker image
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi
-
-      - name: Install QMK
-        run: |
-          python3 -m pip install qmk
-
-      - name: Setup QMK
-        run: |
-          qmk setup -y
-
-      - name: Build firmware
-        run: |
-          qmk compile -kb hackpad -km default
+          docker run --rm -v ${{ github.workspace }}:/qmk qmkfm/qmk_cli \
+            qmk compile -kb hackpad -km default
 
       - name: Upload firmware artifact
         uses: actions/upload-artifact@v4
