@@ -23,7 +23,7 @@ jobs:
         run: |
           # 1. Create the destination directory inside the QMK tree
           # Replace <keyboard_path> with your keyboard (e.g., gmmk/pro)
-          DEST="qmk_firmware/keyboards/<keyboard_path>/keymaps/custom_build"
+          DEST="qmk_firmware/keyboards/hackpad/keymaps/custom_build"
           mkdir -p "$DEST"
           
           # 2. Copy your files from your repo into that folder
