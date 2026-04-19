@@ -1,0 +1,32 @@
+name: Build Hackpad Firmware
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install QMK
+        run: |
+          python3 -m pip install qmk
+
+      - name: Setup QMK
+        run: |
+          qmk setup -y
+
+      - name: Build firmware
+        run: |
+          qmk compile -kb hackpad -km default
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: hackpad-firmware
+          path: "*.uf2"
